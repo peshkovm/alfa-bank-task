@@ -34,9 +34,9 @@ class AlfaBankTaskApplicationTests {
   @ParameterizedTest
   @ValueSource(
       strings = {
-        "file:input_files/input.xml",
+        "file:src/test/resources/input_files/input.xml",
         "classpath:input_files/input.xml",
-        "url:file:input_files/input.xml"
+        "url:file:src/test/resources/input_files/input.xml"
       })
   @DisplayName("Should read input file")
   void shouldReadInputFile(final String inputFileRef) throws IOException {
@@ -50,9 +50,9 @@ class AlfaBankTaskApplicationTests {
   @ParameterizedTest
   @ValueSource(
       strings = {
-        "file:input_files/input.xml",
+        "file:src/test/resources/input_files/input.xml",
         "classpath:input_files/input.xml",
-        "url:file:input_files/input.xml"
+        "url:file:src/test/resources/input_files/input.xml"
       })
   @DisplayName("Should parse input xml file")
   void shouldParseInputXmlFile(final String inputFileRef) throws Exception {
@@ -61,7 +61,7 @@ class AlfaBankTaskApplicationTests {
 
     final Storage storage = serializer.read(Storage.class, inputFile);
 
-    System.out.println("storage = " + storage);
+    log.debug("storage = " + storage);
   }
 
   @Root(name = "Storage")
@@ -77,7 +77,7 @@ class AlfaBankTaskApplicationTests {
     /**
      * Validates absence of duplicate ids
      *
-     * @throws PersistenceException
+     * @throws PersistenceException Is thrown if validation error occurred
      */
     @Validate
     public void validate() throws PersistenceException {
