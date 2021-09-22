@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.simpleframework.xml.Attribute;
@@ -19,10 +20,15 @@ import org.simpleframework.xml.core.PersistenceException;
 import org.simpleframework.xml.core.Persister;
 import org.simpleframework.xml.core.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@SpringBootTest
+@ContextConfiguration(
+    classes = {AlfaBankTaskApplication.class},
+    initializers = ConfigDataApplicationContextInitializer.class)
+@ExtendWith(SpringExtension.class)
 @Slf4j
 class AlfaBankTaskApplicationTests {
 
