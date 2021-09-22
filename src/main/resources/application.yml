@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:h2:file:C:\JavaLessons\alfa-bank-task\src\main\resources/h2/db/db;AUTO_SERVER=TRUE
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      mode: always
