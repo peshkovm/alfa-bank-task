@@ -9,5 +9,4 @@ public class AlfaBankTaskApplication {
   public static void main(String[] args) {
     SpringApplication.run(AlfaBankTaskApplication.class, args);
   }
-
 }

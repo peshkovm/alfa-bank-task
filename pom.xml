@@ -51,6 +51,12 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- XML Serialization -->
+    <dependency>
+      <groupId>org.simpleframework</groupId>
+      <artifactId>simple-xml</artifactId>
+      <version>2.7.1</version>
+    </dependency>
   </dependencies>
 
   <build>
