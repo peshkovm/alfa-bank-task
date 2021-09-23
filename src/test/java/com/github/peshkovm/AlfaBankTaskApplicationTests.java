@@ -1,16 +1,14 @@
 package com.github.peshkovm;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
-@ContextConfiguration(
-    classes = {AlfaBankTaskApplication.class},
-    initializers = ConfigDataApplicationContextInitializer.class)
-@ExtendWith(SpringExtension.class)
+@SpringBootTest
 class AlfaBankTaskApplicationTests {
+
+  @MockBean CommandLineRunner dataLoader;
 
   @Test
   void contextLoads() {}
