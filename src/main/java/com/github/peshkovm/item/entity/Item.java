@@ -2,6 +2,7 @@ package com.github.peshkovm.item.entity;
 
 import com.github.peshkovm.box.entity.Box;
 import com.github.peshkovm.core.entity.AbstractEntity;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -20,7 +21,7 @@ public class Item extends AbstractEntity {
   @Column(name = "COLOR", length = 100)
   private String color;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "CONTAINED_IN", referencedColumnName = "ID")
   private Box parentBox;
 

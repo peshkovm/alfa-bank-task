@@ -43,8 +43,8 @@ public class AlfaBankTaskApplication {
       final Map<Integer, Item> itemMap =
           itemConverter.convertToItems(itemElements, boxElements, boxMap);
 
-      boxRepository.saveAll(boxMap.values());
       itemRepository.saveAll(itemMap.values());
+      boxRepository.saveAll(boxMap.values());
     };
   }
 }
