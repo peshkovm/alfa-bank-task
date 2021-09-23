@@ -8,12 +8,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Table(name = "ITEM")
+@Getter
 @Setter
 public class Item extends AbstractEntity {
+
   @Column(name = "COLOR", length = 100)
   private String color;
 

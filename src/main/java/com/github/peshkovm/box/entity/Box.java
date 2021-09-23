@@ -5,10 +5,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Table(name = "BOX")
+@Getter
 @Setter
 public class Box extends AbstractEntity {
 
@@ -18,8 +20,13 @@ public class Box extends AbstractEntity {
   public Box() {}
 
   @Builder
-  public Box(Integer id,Integer containedIn) {
+  public Box(Integer id, Integer containedIn) {
     this.id = id;
     this.containedIn = containedIn;
+  }
+
+  @Override
+  public String toString() {
+    return "Box{" + "containedIn=" + containedIn + ", id=" + id + '}';
   }
 }

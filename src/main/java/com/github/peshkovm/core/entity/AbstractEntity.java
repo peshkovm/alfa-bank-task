@@ -9,9 +9,9 @@ import lombok.Setter;
 @MappedSuperclass
 @Setter
 @Getter
-public class AbstractEntity {
+public abstract class AbstractEntity {
+
   @Id
-//  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "ID")
   protected Integer id;
 

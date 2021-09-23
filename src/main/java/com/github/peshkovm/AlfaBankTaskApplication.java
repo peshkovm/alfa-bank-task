@@ -29,52 +29,71 @@ public class AlfaBankTaskApplication {
       final BoxRepository boxRepository,
       final ItemRepository itemRepository) {
 
-    return args -> {
-      final XmlElements xmlElements = XmlParserUtils.parse(resourceLoader, args[0]);
-      final Set<BoxElement> boxElements = xmlElements.getBoxElements();
-      final Set<ItemElement> itemElements = xmlElements.getItemElements();
-      final Map<Integer, Box> boxMap = new HashMap<>();
-      final Map<Integer, Item> itemMap = new HashMap<>();
+    return new CommandLineRunner() {
+      @Override
+      public void run(String... args) throws Exception {
+        final XmlElements xmlElements = XmlParserUtils.parse(resourceLoader, args[0]);
+        final Set<BoxElement> boxElements = xmlElements.getBoxElements();
+        final Set<ItemElement> itemElements = xmlElements.getItemElements();
 
-      boxElements.forEach(
-          boxElement -> {
-            final Box box =
-                boxMap.computeIfAbsent(boxElement.getId(), id -> Box.builder().id(id).build());
+        final Map<Integer, Box> boxMap = getBoxes(boxElements);
+        final Map<Integer, Item> itemMap = getItems(itemElements, boxElements, boxMap);
 
-            boxElement
-                .getBoxElements()
-                .forEach(
-                    childBoxElement -> {
-                      final Box childBox =
-                          boxMap.computeIfAbsent(
-                              childBoxElement.getId(), id -> Box.builder().id(id).build());
+        boxRepository.saveAll(boxMap.values());
+        itemRepository.saveAll(itemMap.values());
+      }
 
-                      childBox.setContainedIn(box.getId());
-                    });
-          });
+      private Map<Integer, Box> getBoxes(final Set<BoxElement> boxElements) {
+        final Map<Integer, Box> boxMap = new HashMap<>();
 
-      itemElements.forEach(
-          itemElement ->
-              itemMap.put(
-                  itemElement.getId(),
-                  Item.builder().id(itemElement.getId()).color(itemElement.getColor()).build()));
+        boxElements.forEach(
+            boxElement -> {
+              final Box box =
+                  boxMap.computeIfAbsent(boxElement.getId(), id -> Box.builder().id(id).build());
 
-      boxElements.forEach(
-          boxElement ->
               boxElement
-                  .getItemElements()
+                  .getBoxElements()
                   .forEach(
-                      childItemElement -> {
-                        final Item childItem =
-                            itemMap.computeIfAbsent(
-                                childItemElement.getId(), id -> Item.builder().id(id).build());
+                      childBoxElement -> {
+                        final Box childBox =
+                            boxMap.computeIfAbsent(
+                                childBoxElement.getId(), id -> Box.builder().id(id).build());
 
-                        childItem.setColor(childItemElement.getColor());
-                        childItem.setContainedIn(boxMap.get(boxElement.getId()));
-                      }));
+                        childBox.setContainedIn(box.getId());
+                      });
+            });
 
-      boxRepository.saveAll(boxMap.values());
-      itemRepository.saveAll(itemMap.values());
+        return boxMap;
+      }
+
+      private Map<Integer, Item> getItems(
+          final Set<ItemElement> itemElements,
+          final Set<BoxElement> boxElements,
+          final Map<Integer, Box> boxMap) {
+        final Map<Integer, Item> itemMap = new HashMap<>();
+
+        itemElements.forEach(
+            itemElement ->
+                itemMap.put(
+                    itemElement.getId(),
+                    Item.builder().id(itemElement.getId()).color(itemElement.getColor()).build()));
+
+        boxElements.forEach(
+            boxElement ->
+                boxElement
+                    .getItemElements()
+                    .forEach(
+                        childItemElement -> {
+                          final Item childItem =
+                              itemMap.computeIfAbsent(
+                                  childItemElement.getId(), id -> Item.builder().id(id).build());
+
+                          childItem.setColor(childItemElement.getColor());
+                          childItem.setContainedIn(boxMap.get(boxElement.getId()));
+                        }));
+
+        return itemMap;
+      }
     };
   }
 }
