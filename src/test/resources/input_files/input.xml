@@ -6,18 +6,9 @@
     <Box id="3">
       <Item id="3" color="red"/>
       <Item id="4" color="black"/>
-      <Box id="10">
-        <Item id="15" color="red"/>
-        <Item id="27" color="red"/>
-      </Box>
     </Box>
     <Box id="6"/>
     <Item id="5"/>
-    <Item id="123" color="red"/>
-    <Box id="1212">
-      <Item id="1312" color="red"/>
-    </Box>
   </Box>
   <Item id="6"/>
-  <Item id="13" color="red"/>
 </Storage>

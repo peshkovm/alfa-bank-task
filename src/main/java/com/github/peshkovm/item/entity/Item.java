@@ -32,4 +32,17 @@ public class Item extends AbstractEntity {
     this.color = color;
     this.parentBox = parentBox;
   }
+
+  @Override
+  public String toString() {
+    return "Item{"
+        + "id="
+        + id
+        + ", color='"
+        + color
+        + '\''
+        + ", parentBoxId="
+        + parentBox.getId()
+        + '}';
+  }
 }

@@ -27,6 +27,6 @@ public class Box extends AbstractEntity {
 
   @Override
   public String toString() {
-    return "Box{" + "containedIn=" + parentBoxId + ", id=" + id + '}';
+    return "Box{" + "parentBoxId=" + parentBoxId + ", id=" + id + '}';
   }
 }

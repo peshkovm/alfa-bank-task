@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
@@ -18,7 +18,7 @@ import org.simpleframework.xml.core.Persister;
 import org.simpleframework.xml.core.Validate;
 import org.springframework.core.io.ResourceLoader;
 
-@Slf4j
+@Log4j2
 public class XmlParserUtils {
 
   private XmlParserUtils() {}
@@ -30,9 +30,16 @@ public class XmlParserUtils {
 
     final StorageElement storageElement = serializer.read(StorageElement.class, inputFile);
 
-    log.debug("storage = " + storageElement);
+    log.debug("Parsed Storage: {}", () -> storageElement);
 
     return new XmlElements(storageElement);
+  }
+
+  private static Stream<BoxElement> flatAllBoxes(final List<BoxElement> boxElements) {
+    return boxElements.stream()
+        .flatMap(
+            boxElement ->
+                Stream.concat(Stream.of(boxElement), flatAllBoxes(boxElement.getBoxElements())));
   }
 
   public static class XmlElements {
@@ -47,7 +54,7 @@ public class XmlParserUtils {
       final Set<BoxElement> boxes =
           flatAllBoxes(storageElement.boxElements).collect(Collectors.toSet());
 
-      boxes.forEach(boxElement -> log.debug(boxElement.toString()));
+      log.debug("Parsed Boxes: {}", boxes.toString());
 
       return boxes;
     }
@@ -60,16 +67,9 @@ public class XmlParserUtils {
                       .flatMap(boxElement -> boxElement.getItemElements().stream()))
               .collect(Collectors.toSet());
 
-      items.forEach(itemElement -> log.debug(itemElement.toString()));
+      log.debug("Parsed Items: {}", items.toString());
 
       return items;
-    }
-
-    private Stream<BoxElement> flatAllBoxes(final List<BoxElement> boxElements) {
-      return boxElements.stream()
-          .flatMap(
-              boxElement ->
-                  Stream.concat(Stream.of(boxElement), flatAllBoxes(boxElement.getBoxElements())));
     }
 
     @Root(name = "Box")
@@ -168,10 +168,8 @@ public class XmlParserUtils {
     }
 
     private void validateBoxes() throws PersistenceException {
-      final var ids = getAllBoxes(boxElements).map(BoxElement::getId).toList();
+      final var ids = flatAllBoxes(boxElements).map(BoxElement::getId).toList();
       final var set = new HashSet<Integer>();
-
-      ids.forEach(id -> log.debug("Box id=" + id));
 
       for (Integer id : ids) {
         if (!set.add(id)) {
@@ -184,26 +182,17 @@ public class XmlParserUtils {
       final var ids =
           Stream.concat(
                   itemElements.stream(),
-                  getAllBoxes(boxElements)
+                  flatAllBoxes(boxElements)
                       .flatMap(boxElement -> boxElement.getItemElements().stream()))
               .map(ItemElement::getId)
               .toList();
       final var set = new HashSet<Integer>();
-
-      ids.forEach(id -> log.debug("Item id=" + id));
 
       for (Integer id : ids) {
         if (!set.add(id)) {
           throw new PersistenceException("Duplicate Item id: " + id);
         }
       }
-    }
-
-    private Stream<BoxElement> getAllBoxes(final List<BoxElement> boxElements) {
-      return boxElements.stream()
-          .flatMap(
-              boxElement ->
-                  Stream.concat(Stream.of(boxElement), getAllBoxes(boxElement.getBoxElements())));
     }
 
     @Override
