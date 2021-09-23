@@ -59,7 +59,7 @@ public class AlfaBankTaskApplication {
                             boxMap.computeIfAbsent(
                                 childBoxElement.getId(), id -> Box.builder().id(id).build());
 
-                        childBox.setContainedIn(box.getId());
+                        childBox.setParentBoxId(box.getId());
                       });
             });
 
@@ -89,7 +89,7 @@ public class AlfaBankTaskApplication {
                                   childItemElement.getId(), id -> Item.builder().id(id).build());
 
                           childItem.setColor(childItemElement.getColor());
-                          childItem.setContainedIn(boxMap.get(boxElement.getId()));
+                          childItem.setParentBox(boxMap.get(boxElement.getId()));
                         }));
 
         return itemMap;

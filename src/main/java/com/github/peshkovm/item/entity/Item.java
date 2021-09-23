@@ -22,14 +22,14 @@ public class Item extends AbstractEntity {
 
   @ManyToOne
   @JoinColumn(name = "CONTAINED_IN", referencedColumnName = "ID")
-  private Box containedIn;
+  private Box parentBox;
 
   public Item() {}
 
   @Builder
-  public Item(Integer id, String color, Box containedIn) {
+  public Item(Integer id, String color, Box parentBox) {
     this.id = id;
     this.color = color;
-    this.containedIn = containedIn;
+    this.parentBox = parentBox;
   }
 }

@@ -15,18 +15,18 @@ import lombok.Setter;
 public class Box extends AbstractEntity {
 
   @Column(name = "CONTAINED_IN")
-  private Integer containedIn;
+  private Integer parentBoxId;
 
   public Box() {}
 
   @Builder
-  public Box(Integer id, Integer containedIn) {
+  public Box(Integer id, Integer parentBoxId) {
     this.id = id;
-    this.containedIn = containedIn;
+    this.parentBoxId = parentBoxId;
   }
 
   @Override
   public String toString() {
-    return "Box{" + "containedIn=" + containedIn + ", id=" + id + '}';
+    return "Box{" + "containedIn=" + parentBoxId + ", id=" + id + '}';
   }
 }
