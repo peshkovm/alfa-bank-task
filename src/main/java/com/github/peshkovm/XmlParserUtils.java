@@ -2,6 +2,7 @@ package com.github.peshkovm;
 
 import com.github.peshkovm.XmlParserUtils.XmlElements.BoxElement;
 import com.github.peshkovm.XmlParserUtils.XmlElements.ItemElement;
+import java.io.File;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,19 +17,16 @@ import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.PersistenceException;
 import org.simpleframework.xml.core.Persister;
 import org.simpleframework.xml.core.Validate;
-import org.springframework.core.io.ResourceLoader;
 
 @Log4j2
 public class XmlParserUtils {
 
   private XmlParserUtils() {}
 
-  public static XmlElements parse(final ResourceLoader resourceLoader, final String xmlRef)
-      throws Exception {
+  public static XmlElements parse(final File xmlFile) throws Exception {
     final Serializer serializer = new Persister();
-    final var inputFile = resourceLoader.getResource(xmlRef).getFile();
 
-    final StorageElement storageElement = serializer.read(StorageElement.class, inputFile);
+    final StorageElement storageElement = serializer.read(StorageElement.class, xmlFile);
 
     log.debug("Parsed Storage: {}", () -> storageElement);
 
@@ -85,6 +83,14 @@ public class XmlParserUtils {
       @ElementList(inline = true, required = false, empty = false)
       private List<BoxElement> boxElements;
 
+      public BoxElement() {}
+
+      public BoxElement(int id, List<ItemElement> itemElements, List<BoxElement> boxElements) {
+        this.id = id;
+        this.itemElements = itemElements;
+        this.boxElements = boxElements;
+      }
+
       @Override
       public String toString() {
         return "Box{" + "id=" + id + ", items=" + itemElements + ", boxes=" + boxElements + '}';
@@ -119,6 +125,13 @@ public class XmlParserUtils {
 
       @Attribute(name = "color", required = false)
       private String color;
+
+      public ItemElement() {}
+
+      public ItemElement(int id, String color) {
+        this.id = id;
+        this.color = color;
+      }
 
       @Override
       public String toString() {

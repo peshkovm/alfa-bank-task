@@ -9,6 +9,7 @@ import com.github.peshkovm.box.repository.BoxRepository;
 import com.github.peshkovm.item.converter.ItemConverter;
 import com.github.peshkovm.item.entity.Item;
 import com.github.peshkovm.item.repository.ItemRepository;
+import java.io.File;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.boot.CommandLineRunner;
@@ -33,7 +34,8 @@ public class AlfaBankTaskApplication {
       final ItemConverter itemConverter) {
 
     return args -> {
-      final XmlElements xmlElements = XmlParserUtils.parse(resourceLoader, args[0]);
+      final File xmlFile = resourceLoader.getResource(args[0]).getFile();
+      final XmlElements xmlElements = XmlParserUtils.parse(xmlFile);
       final Set<BoxElement> boxElements = xmlElements.getBoxElements();
       final Set<ItemElement> itemElements = xmlElements.getItemElements();
 
