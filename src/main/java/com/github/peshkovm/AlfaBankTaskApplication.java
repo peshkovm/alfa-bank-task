@@ -1,7 +1,8 @@
 package com.github.peshkovm;
 
-import com.github.peshkovm.XmlParser.BoxElement;
-import com.github.peshkovm.XmlParser.ItemElement;
+import com.github.peshkovm.XmlParserUtils.XmlElements;
+import com.github.peshkovm.XmlParserUtils.XmlElements.BoxElement;
+import com.github.peshkovm.XmlParserUtils.XmlElements.ItemElement;
 import com.github.peshkovm.box.entity.Box;
 import com.github.peshkovm.box.repository.BoxRepository;
 import com.github.peshkovm.item.entity.Item;
@@ -29,10 +30,10 @@ public class AlfaBankTaskApplication {
       final ItemRepository itemRepository) {
 
     return args -> {
-      final XmlParser xmlParser = new XmlParser(resourceLoader, args[0]);
-      final Set<BoxElement> boxElements = xmlParser.getBoxElements();
+      final XmlElements xmlElements = XmlParserUtils.parse(resourceLoader, args[0]);
+      final Set<BoxElement> boxElements = xmlElements.getBoxElements();
+      final Set<ItemElement> itemElements = xmlElements.getItemElements();
       final Map<Integer, Box> boxMap = new HashMap<>();
-      final Set<ItemElement> itemElements = xmlParser.getItemElements();
       final Map<Integer, Item> itemMap = new HashMap<>();
 
       boxElements.forEach(
