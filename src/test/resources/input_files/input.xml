@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Storage>
   <Box id="1">
-    <Item id="1"/>
-    <Item color="red" id="2"/>
-    <Box id="3">
-      <Item id="3" color="red"/>
-      <Item id="4" color="black"/>
+    <Item id="1" color="green"/>
+    <Item id="2" color="blue"/>
+    <Box id="4">
+      <Box id="5"/>
+      <Item id="4" color="green"/>
+      <Box id="6">
+        <Item id="5" color="green"/>
+      </Box>
     </Box>
-    <Box id="6"/>
-    <Item id="5"/>
   </Box>
-  <Item id="6"/>
+  <Box id="2"/>
+  <Box id="3">
+    <Item id="6" color="orange"/>
+  </Box>
+  <Item id="3"/>
+  <Item id="7" color="green"/>
 </Storage>
