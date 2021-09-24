@@ -50,7 +50,7 @@ class BoxRepositoryITest extends AbstractXmlTest {
 
     boxRepository.saveAll(boxes);
 
-    final Collection<Box> foundBoxes = boxRepository.findBoxesByIdOrParentBoxIdRecursively(1);
+    final Collection<Box> foundBoxes = boxRepository.findTree(1);
 
     assertTrue(boxes.containsAll(foundBoxes));
     assertAll(

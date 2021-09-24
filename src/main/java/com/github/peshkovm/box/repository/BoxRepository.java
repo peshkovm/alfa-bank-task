@@ -25,5 +25,5 @@ public interface BoxRepository extends CrudRepository<Box, Integer> {
               SELECT ID, CONTAINED_IN
               FROM Tree;""",
       nativeQuery = true)
-  Collection<Box> findBoxesByIdOrParentBoxIdRecursively(Integer id);
+  Collection<Box> findTree(Integer rootId);
 }
