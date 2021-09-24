@@ -2,7 +2,7 @@ package com.github.peshkovm.item.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.github.peshkovm.AlfaBankTaskApplication.DataLoader;
+import com.github.peshkovm.XmlDataLoader;
 import com.github.peshkovm.box.converter.BoxConverter;
 import com.github.peshkovm.box.service.BoxService;
 import com.github.peshkovm.item.converter.ItemConverter;
@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.util.List;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -33,15 +34,16 @@ import org.springframework.http.ResponseEntity;
 public class ItemControllerITest {
 
   @TempDir static Path sharedTempDir;
-  private static Path xmlPath;
+  static Path xmlPath;
   @Autowired ResourceLoader resourceLoader;
   @Autowired BoxService boxService;
   @Autowired ItemService itemService;
   @Autowired BoxConverter boxConverter;
   @Autowired ItemConverter itemConverter;
   @Autowired TestRestTemplate testRestTemplate;
-  @LocalServerPort private int port;
-  @MockBean CommandLineRunner dataLoader;
+  @LocalServerPort int port;
+  @MockBean CommandLineRunner commandLineRunner;
+  @Autowired XmlDataLoader xmlDataLoader;
 
   @BeforeAll
   static void createXmlFile() throws IOException {
@@ -66,11 +68,14 @@ public class ItemControllerITest {
     Files.writeString(xmlPath, xmlBody);
   }
 
+  @BeforeEach
+  void loadDataFromXml() {
+    xmlDataLoader.accept("file:" + xmlPath.toString());
+  }
+
   @Test
   @DisplayName("Should return items id")
   void shouldReturnItemsId() throws Exception {
-    new DataLoader(resourceLoader, boxService, itemService, boxConverter, itemConverter)
-        .run("file:" + xmlPath.toString());
     final String uri = "http://localhost:" + port + "/test";
 
     final HttpHeaders headers = new HttpHeaders();
