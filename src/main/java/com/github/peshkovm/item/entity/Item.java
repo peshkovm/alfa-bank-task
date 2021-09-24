@@ -36,14 +36,7 @@ public class Item extends AbstractEntity {
 
   @Override
   public String toString() {
-    return "Item{"
-        + "id="
-        + id
-        + ", color='"
-        + color
-        + '\''
-        + ", parentBoxId="
-        + parentBox.getId()
-        + '}';
+    final Integer parentBoxId = parentBox == null ? null : parentBox.getId();
+    return "Item{" + "id=" + id + ", color='" + color + '\'' + ", parentBoxId=" + parentBoxId + '}';
   }
 }
