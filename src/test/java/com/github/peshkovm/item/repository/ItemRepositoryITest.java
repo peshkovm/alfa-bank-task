@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Import;
 
 @DataJpaTest
 @Import(value = {ItemConverter.class, BoxConverter.class})
-class ItemRepositoryTest extends AbstractXmlTest {
+class ItemRepositoryITest extends AbstractXmlTest {
 
   @Autowired ItemConverter itemConverter;
   @Autowired BoxConverter boxConverter;

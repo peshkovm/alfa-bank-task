@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Import;
 
 @DataJpaTest
 @Import(BoxConverter.class)
-class BoxRepositoryTest extends AbstractXmlTest {
+class BoxRepositoryITest extends AbstractXmlTest {
 
   @Autowired BoxRepository boxRepository;
   @Autowired BoxConverter boxConverter;
