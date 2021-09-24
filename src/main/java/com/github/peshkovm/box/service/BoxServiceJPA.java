@@ -15,4 +15,9 @@ public class BoxServiceJPA implements BoxService{
   public Collection<Box> findTree(Integer rootId) {
     return boxRepository.findTree(rootId);
   }
+
+  @Override
+  public Iterable<Box> saveAll(Collection<Box> boxes) {
+    return boxRepository.saveAll(boxes);
+  }
 }

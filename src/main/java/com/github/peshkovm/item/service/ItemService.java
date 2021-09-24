@@ -6,4 +6,6 @@ import java.util.Collection;
 
 public interface ItemService {
   Collection<Item> findItemsByParentBoxInAndColor(Collection<Box> boxes, String color);
+
+  Iterable<Item> saveAll(Collection<Item> values);
 }

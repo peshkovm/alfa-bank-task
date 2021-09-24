@@ -17,4 +17,9 @@ public class ItemServiceJPA implements ItemService {
   public Collection<Item> findItemsByParentBoxInAndColor(Collection<Box> boxes, String color) {
     return itemRepository.findItemsByParentBoxInAndColor(boxes, color);
   }
+
+  @Override
+  public Iterable<Item> saveAll(Collection<Item> items) {
+    return itemRepository.saveAll(items);
+  }
 }

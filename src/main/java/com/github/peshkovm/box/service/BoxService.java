@@ -5,4 +5,6 @@ import java.util.Collection;
 
 public interface BoxService {
   Collection<Box> findTree(Integer rootId);
+
+  Iterable<Box> saveAll(Collection<Box> values);
 }

@@ -13,7 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Set;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -22,8 +22,8 @@ class XmlParserUtilsTest extends AbstractXmlTest {
 
   @TempDir static Path sharedTempDir;
 
-  @BeforeEach
-  void setUp() throws IOException {
+  @BeforeAll
+  static void createXmlFile() throws IOException {
     final Path xmlPath = sharedTempDir.resolve("input.xml");
     final String xmlBody =
         """

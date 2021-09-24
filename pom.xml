@@ -57,6 +57,12 @@
       <artifactId>simple-xml</artifactId>
       <version>2.7.1</version>
     </dependency>
+    <dependency>
+      <groupId>com.microsoft.playwright</groupId>
+      <artifactId>playwright</artifactId>
+      <version>1.14.1</version>
+    </dependency>
+
   </dependencies>
 
   <build>
